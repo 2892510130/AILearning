@@ -1,0 +1,26 @@
+### Table of Content
+- Chapter  2 : Preliminary Knowledge
+- Chapter  3 : Linear Neural Network
+- Chapter  4 : Classification
+- Chapter  5 : Multilayer Perceptrons
+- Chapter  6 : Beginner Guide
+- Chapter  7 : CNN
+- Chapter  8 : Modern CNN
+- Chapter  9 : RNN
+- Chapter 10 : Modern RNN
+- Chapter 11 : Attention and Transformer
+- Chapter 12 : Optimization
+- Chapter 13 : Computation Performance
+- Chapter 14 : Computer Vision
+- Chapter 15 : NLP (pre-tranining)
+- Chapter 16 : NLP (applications)
+- Chapter 17 : Reinforcement Learning
+- Chapter 18 : Gaussian Processes
+- Chapter 19 : Hyperparameter Optimization
+- Chapter 20 : Generative Adversarial Networks
+- Chapter 21 : Recommender Systems
+  
+- Appendenix : Engineer and Hardware Optimization RoadMap
+- Appendenix : Gradient Check Techniques.
+- Useful Jupyter Lab Tips:
+  - %whos for variables in memory

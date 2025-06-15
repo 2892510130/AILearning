@@ -1,0 +1,7 @@
+## Chapter 19 : Hyperparameter Optimization
+- *Configuration Space*: space where hyperparameter choosn from. We can use loguniform to sample hyperparameters which take diverse values.
+- Method 1: *Random Search*, most common and most used one. Remenber to run trials multiple times, get the mean the deviation then compare different configurations.
+- Synchronous vs. Asynchronous, latter one will not wait for the previous trial result, which is good for trials have different wall times (max running time). And it will drop out bad configuration from time to time.
+- *Multi-fidelity* HPO allocates more resources to promising configurations and stop evaluations of poorly performing ones early.
+  - *Successive Halving*: start with $N$ configurations, choose a halving constant $\eta$, run $r_{min}$ epoches, keep top $1 / \eta$ fraction, then run $r_{min}\eta$ epoches, keep...
+  - *Asynchronous Successive Halving*: don't wait for same run to finish, every time we finish a trial, compare it with the loss in the same run (epoch) condition, if these loss number is less than $\eta$, do more trial for the same epoch, it loss number is larger than $\eta$, check whether it is top $1/\eta$ one, if it is, pormote to next level (more epoch).

@@ -1,0 +1,36 @@
+## Chapter 12 : Optimization
+- **Convexity**
+  - Convex set : for any $a, b \in \mathcal X$, given $\lambda \in [0, 1]$, $\lambda a + (1 - \lambda) b \in \mathcal X$.
+  - Convex function : for any function $f : \mathcal X \rightarrow \mathbb R$, we have $\lambda f(x) + (1 - \lambda) f(x') >= f(\lambda x + (1-\lambda)x')$.
+  - jensen's inequality : $\sum_i\alpha_if(x_i)\geq f\left(\sum_i\alpha_ix_i\right)$ and $E_X[f(X)]\geq f\left(E_X[X]\right)$
+  - Properties : Local Minima Are Global Minima, below set $\mathcal{S}_b\overset{\mathrm{def}}{\operatorname*{=}}\{x|x\in\mathcal{X}\mathrm{~and~}f(x)\leq b\}$ is also a convex set, f is convex if hessian of f is positive semidefinite ($\nabla^2 f = H, x^THx >= 0$).
+  - Convex with constraint $c_i(x) <= 0$, can be dealed with lagrangian, and the KKT condition. KKT are:
+    - Stationarity : $\nabla_x L(f(x), \lambda_1, \ldots, \lambda_n) = 0$.
+    - Primal Feasibility : $c_i(x) <= 0$
+    - Dual Feasibility : $\lambda_i >= 0$
+    - Complementary Slackness : $\lambda_i c_i(x) = 0$
+  - Penality is robust than constraint. We can also use projection to satisfy constraints.
+- **Gradient Descent**
+  - $x \leftarrow x - \eta \nabla_x f(x)$, with newton's method $\eta = \nabla_x^{-2} f(x) = H^{-1}$
+  - H is expensive, so we can use precondition $x \leftarrow x - \eta \text{diag}(H)^{-1}\nabla_x f(x)$, this means for different $x_i$ we use different learning rates.
+  - Line search : use binary search to find $\eta$ that minimize $f(x - \eta \nabla_x f(x))$.
+- **SGD**： converge with rate $\mathcal O (1/\sqrt T)$, $T$ is the sample number. More details of the math please see the book.
+- **Momentum**
+  - Use leaky average $v_k = \beta v_{k-1} + g_{k, k-1}$ as the gradient, this is the momentum!
+  - Gradient descent with and without momentum for a convex quadratic function decomposes into coordinate-wise optimization in the direction of the eigenvectors of the quadratic matrix.
+  - The velocity converge condition is loose than gradient converge condition, so add momentum (with big $\beta$ ) is theoritaly better.
+- **Adagrad** : it is a SGD alg
+  - Some features are rare, so we want to update it faster ( we do not update their gradient much ).
+  - Some problem has large condition number $k = \lambda_{max} / \lambda_{min}$, which is not good. We can rescale them by some matrix (if Hessian of the problem L is possitive semidefinite), or just rescalse the diag of the Q. $\tilde Q = \text{diag}(Q)^{-1/2}Q\text{diag}(Q)^{-1/2}$. However this is not realistic in DL, because we don't have second derivitive of Q, so Adagrad use the norm of the gradient as the scalse item. And this makes it adjust element wise (like only diag will change).
+  - $s_t = s_{t-1} + g_t^2, w_t = w_t - \eta / \sqrt{s_t+\epsilon} \odot g_t$, one problem of Adagrad is that it's learning rate decrease $\mathcal O(t^{-1/2})$.
+- **RMSProp**
+  - $s_t = \gamma s_{t-1} + (1-\gamma) g_t^2$, only difference with Adagrad
+- **Adadelta**
+  - $\mathbf{s}_{t}=\rho \mathbf{s}_{t-1}+(1-\rho) \mathbf{g}_{t}^{2}$, $\mathbf{g}_{t}^{\prime}=\frac{\sqrt{\Delta \mathbf{x}_{t-1}+\epsilon}}{\sqrt{\mathbf{s}_{t}+\epsilon}} \odot \mathbf{g}_{t}$, $x_t = x_t - \mathbf{g}_{t}^{\prime}$, $\Delta\mathbf{x}_{t}=\rho\Delta\mathbf{x}_{t-1}+( 1-\rho) \mathbf{g}_{t}^{\prime\, 2}, $.
+- **Adam**
+  - $v_t = \beta_1 v_{t-1} + (1-\beta_1)g_{t}$, $s_t = \beta_2 s_{t-1} + (1-\beta_2)g^2_{t}$, and the rescale it (otherwise the initial numbers are too diverge from gradient), $\hat v_t = v_t / (1 + \beta_1^t)$, $\hat s_t = s_t / (1 + \beta_2^t)$. Then finnally $x_t = x_t - \eta \hat v_t / (\sqrt{\hat s_t} + \epsilon)$
+  - One of the problems of Adam is that it can fail to converge even in convex settings when the second moment estimate in $s_t$ blows up as $g^2_t$ being too large and forget the history. Yogi update is $s_t = s_{t-1} + (1-\beta_2)g^2_{t} \odot (g^2_{t} - s_{t-1})$, the update is not the deviation of $g^2_{t} - s_{t-1}$, it is $g^2_{t}$ with regard to the sign.
+- Scheduler
+  - Warmup: In particular they find that a warmup phase limits the amount of divergence of parameters in very deep networks. A closer look at deep learning heuristics: learning rate restarts, warmup and distillation. ArXiv:1810.13243.
+<!-- <img alt="ResNeXt Block" src="https://d2l.ai/_images/rnn.svg" style="background-color: white; display: inline-block;"> -->
+<!-- <img alt="ResNeXt Block" src="https://d2l.ai/_images/rnn-bptt.svg" style="background-color: white; display: inline-block;"> -->

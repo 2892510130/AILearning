@@ -1,0 +1,18 @@
+### Chapter 2 : Preliminary Knowledge
+- 数据操作
+  - 广播机制（两个数据分别复制扩充到同样的尺寸）
+  - 节省内存（使用X[:] = \<expression\>或X+=\<expression\>来避免重新分配）
+- 数据预处理
+- 线性代数 
+  - 转置.T 范数norm
+  - 非降维求和 (keepdims=True)，累积和cumsum
+  - torch.dot只支持向量，矩阵和向量间用mv，矩阵之间用mm
+- 微积分
+  - 设T是梯度算符，T(Ax) = A.T, T(x.T·A) = A, T(x.T A x) = (A + A.T)x
+- 自动微分
+  - 在默认情况下，PyTorch会累积梯度，我们需要清除之前的值
+  - 自动微分必须是标量，非标量的话要么转成标量，要么指定输出形状
+  - 分离操作
+- 概率论
+- 查阅文档、API的指导
+  - dir查看可以调用的函数和类
