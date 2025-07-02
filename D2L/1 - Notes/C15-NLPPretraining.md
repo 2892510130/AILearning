@@ -52,6 +52,6 @@
       <figcaption> BERT input </figcaption>
     </figure>
   - Pretraining Tasks:
-    - Masked Language Modeling: get the BERT output, add mask on certain position, add a mlp layer to predict these position. The mask can be a special token [\<mask\>] or the original token or a randome token, we can use a probability of [0.8, 0.1, 0.1] for all three cases. Note than special token [cls] and [sep] will not be the prediction target.
+    - Masked Language Modeling: get the BERT output, add mask on certain position (at probability of 15%), add a mlp layer to predict these position. The mask can be a special token [\<mask\>] or the original token or a randome token, we can use a probability of [0.8, 0.1, 0.1] for all three cases (for the downstream task to fine-tune better, because if all position is [\<mask\>], and downstream task does not have this token, it will be bad). Note than special token [cls] and [sep] will not be the prediction target.
     - Next Sentence Prediction: MLM does not understant the relationship of two sequences. So we implement this, add one layer after [cls] token representation to train a binary task (whether next sequence is logically the next one for this sequence). In training, we sample 50% ramdom sequence and 50% true next sequence.
     - BERT pretraning is a linear combination of these 2 tasks.

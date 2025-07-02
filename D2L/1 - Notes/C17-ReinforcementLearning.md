@@ -13,13 +13,13 @@ $$
 \begin{array}{lll}
 V^{\pi}(s_0) &=& E_{a_t \sim \pi(s_t)}[r(s_0, a_0) + \gamma R(\tau^{'})] \\
              &=& E_{a_0 \sim \pi(s_0)}[r(s_0, a_0)] + E_{a_0 \sim \pi(s_0)}\left[E_{s_1 \sim P(s_1 \mid a_0, s_0)}[E_{a_t \sim \pi(s_t)}[\gamma R(\tau^{'})]]\right] \\ 
-             &=& E_{a_0 \sim \pi(s_0)}[r(s_0, a_0)] + E_{a_0 \sim \pi(s_0)}\left[E_{s_1 \sim P(s_1 \mid a_0, s_0)}[V^{\pi}(s_1)]\right] \\
+             &=& E_{a_0 \sim \pi(s_0)}[r(s_0, a_0)] + E_{a_0 \sim \pi(s_0)}\left[\gamma E_{s_1 \sim P(s_1 \mid a_0, s_0)}[V^{\pi}(s_1)]\right] \\
              &\rightarrow & \\
 V^{\pi}(s)   &=& \sum_{a \in \mathcal A}\pi(a\mid s)\left[r(s,a) + \gamma \sum_{s^{'}}P(s^{'} \mid s, a)V^{\pi}(s^{'})\right], \forall s \in S \\
              &\rightarrow & r(s,a) = \sum_r p(r \mid s,a)r = \sum_r\sum_{s^{'}}p(r,s^{'} \mid s,a)r =  \sum_{s^{'}}p(s^{'} \mid s,a)r(s^{'})\\
              &=& \sum_{a \in \mathcal A}\pi(a\mid s)\sum_{s^{'} \in \mathcal S}P(s^{'} \mid s, a)\left[r(s^{'}) + \gamma V^{\pi}(s^{'})\right]
 \end{array}$$
-Last arrow please refer to *Math of Reinforcement Learning*, if we assume reward only depend on next state.
+    Last arrow please refer to *Math of Reinforcement Learning*, if we assume reward only depend on next state. Note that here maybe we should write $\mathcal A$ as $\mathcal A(s)$, and $r$ depends on $s, a$, but for simplicity (and without error) we drop them.
   - *Action Value* (start at $s_0$ but action is fixed to $a_0$):
 $$
 \begin{array}{lll}
